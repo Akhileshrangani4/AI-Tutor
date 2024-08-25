@@ -51,6 +51,7 @@
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^3.0.6",
+    "dns": "^0.2.2",
     "fs": "^0.0.1-security",
     "jotai": "^2.7.2",
     "lucide-react": "^0.292.0",

@@ -2,6 +2,7 @@ import { type NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db } from "@/lib/db"
 import { sendWelcomeEmail } from "./emails/send-welcome";
@@ -25,7 +26,39 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       allowDangerousEmailAccountLinking: true,
-    })
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "john.doe@email.com" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials, req) {
+        let user = await db.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+
+        // If user doesn't exist or email is not verified, return an error
+        if (!user) {
+          throw new Error("No user found");
+        }
+
+        if (!user.emailVerified) {
+          throw new Error("Please verify your email before signing in");
+        }
+
+        if (user.password !== credentials?.password) {
+          throw new Error("Incorrect password");
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+        };
+      },
+    }),
   ],
   callbacks: {
     async session({ token, session }) {
@@ -39,6 +72,13 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.picture = user.image;
+      }
+
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email,

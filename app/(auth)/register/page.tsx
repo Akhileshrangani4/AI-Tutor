@@ -1,26 +1,23 @@
 import Link from "next/link";
-
 import { Metadata } from "next";
-
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
+import RegisterForm from "@/components/register-user-form";
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
-import GithubLoginForm from "@/components/github-login-form";
-import GoogleLoginForm from "@/components/google-login-form";
-import CredentialsLoginForm from "@/components/credential-login-form";
 
 export const metadata: Metadata = {
-  title: "Login",
-  description: "Login to your account",
-}
+  title: "Register",
+  description: "Create a new account",
+};
 
-export default async function Login() {
-  const user = await getCurrentUser()
+export default async function Register() {
+
+  const user = await getCurrentUser();
 
   if (user) {
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
 
   return (
@@ -40,16 +37,13 @@ export default async function Login() {
       <div data-aos="fade-up" data-aos-duration="1000" className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Welcome
+            Create an Account
           </h1>
           <p className="text-sm text-muted-foreground">
-            Use your Credentials to sign in.
+            Register with your Name, Email and password.
           </p>
           <div className="py-4">
-            {/* <GithubLoginForm /> */}
-            <CredentialsLoginForm />
-            <br/>
-            {/* <GoogleLoginForm /> */}
+            <RegisterForm />
           </div>
         </div>
       </div>
