@@ -178,6 +178,7 @@ export default function RegisterForm() {
                     <>
                         <p>Your email is verified. You can now login.</p>
                         <button
+                            type="button"
                             onClick={() => router.push("/login")}
                             className="mt-2 flex h-10 w-full items-center justify-center rounded-md border border-black bg-white text-black hover:bg-black hover:text-white transition-all focus:outline-none text-sm"
                         >
