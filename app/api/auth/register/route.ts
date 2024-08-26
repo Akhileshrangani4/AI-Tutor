@@ -4,6 +4,7 @@ import dns from "dns/promises";
 import { randomBytes } from "crypto";
 import { addMinutes } from "date-fns";
 import { sendVerificationEmail } from "@/lib/emails/send-verification";
+import bcrypt from "bcrypt"
 
 function isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,12 +69,15 @@ export async function POST(req: Request) {
             );
         }
 
-        // Create the new user with email verification status
+        // Hash the password using bcryptjs
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create the new user with the hashed password and email verification status
         const newUser = await db.user.create({
             data: {
                 name,
                 email,
-                password,
+                password: hashedPassword,
                 emailVerified: null, // Set to null to indicate unverified
             },
         });

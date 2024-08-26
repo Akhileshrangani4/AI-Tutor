@@ -14,8 +14,14 @@ import {
 } from "@react-email/components";
 import { siteConfig } from "@/config/site";
 
-export default function VerifyEmail({ name, verifyUrl }: { name: string | null | undefined, verifyUrl: string }) {
-    const previewText = `Verify your Email Address for ${siteConfig.name}, ${name}!`;
+
+interface ResetPasswordEmailProps {
+    name: string | null | undefined;
+    resetUrl: string
+}
+
+export default function ResetPassword({ name, resetUrl }: ResetPasswordEmailProps) {
+    const previewText = `Reset Password Request for ${siteConfig.name}, ${name}!`;
 
     return (
         <Html>
@@ -25,21 +31,21 @@ export default function VerifyEmail({ name, verifyUrl }: { name: string | null |
                 <Body className="bg-white my-auto mx-auto font-sans">
                     <Container className="my-10 mx-auto p-5 w-[465px]">
                         <Heading className="text-2xl font-normal text-center p-0 my-8 mx-0">
-                            Welcome to {siteConfig.name}!
+                            Reset your Password for {siteConfig.name}:
                         </Heading>
                         <Text className="text-sm">Hello {name},</Text>
                         <Text className="text-sm">
-                            Your account has been created on {siteConfig.name}.
+                            Reset your Password by clicking the link below:
                         </Text>
                         <Text className="text-sm">
-                            Thank you for registering. Please verify your email address by clicking the link below:
+                            This link will expire in 30 minutes.
                         </Text>
                         <Section className="text-center mt-[32px] mb-[32px]">
                             <Button
                                 className="p-2 bg-[#00A3FF] rounded text-white text-xs font-semibold no-underline text-center"
-                                href={verifyUrl}
+                                href={resetUrl}
                             >
-                                Verify Email
+                                Reset Your Password
                             </Button>
                         </Section>
                     </Container>

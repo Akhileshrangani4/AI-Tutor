@@ -226,6 +226,13 @@ model User {
   marketingEmailEnabled Boolean @default(true)
 }
 
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  email     String
+  token     String   @unique
+  expires   DateTime
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique

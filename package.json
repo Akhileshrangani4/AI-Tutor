@@ -44,6 +44,7 @@
     "aos": "^3.0.0-beta.6",
     "async_hooks": "^1.0.0",
     "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "better-react-mathjax": "^2.0.3",
     "cheerio": "^1.0.0-rc.12",
     "child_process": "^1.0.2",

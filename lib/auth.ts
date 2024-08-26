@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 import { db } from "@/lib/db"
 import { sendWelcomeEmail } from "./emails/send-welcome";
@@ -34,6 +35,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password are required");
+        }
+
         let user = await db.user.findUnique({
           where: {
             email: credentials?.email,
@@ -49,7 +54,15 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Please verify your email before signing in");
         }
 
-        if (user.password !== credentials?.password) {
+        // If the password is null, throw an error
+        if (!user.password) {
+          throw new Error("No password set for this user. Please reset your password.");
+        }
+
+        // Compare the stored hashed password with the provided password
+        const isPasswordValid = await bcrypt.compare(credentials?.password, user.password);
+
+        if (!isPasswordValid) {
           throw new Error("Incorrect password");
         }
 

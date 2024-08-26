@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import LoadingDots from "@/components/loading-dots";
 import { toast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 export default function CredentialsLoginForm() {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,12 @@ export default function CredentialsLoginForm() {
       toast({
         title: "Email Verification Required",
         description: "Your email address is not verified. Please check your email for verification instructions.",
+        variant: "destructive",
+      });
+    } else if (error?.includes("No password set")) {
+      toast({
+        title: "Password Not Set",
+        description: "Your account doesn't have a password set. Please reset your password to proceed.",
         variant: "destructive",
       });
     } else {
@@ -101,6 +108,7 @@ export default function CredentialsLoginForm() {
       >
         <p>Create Account</p>
       </button> */}
+      <Link href={"/forgot-password"} className="text-sm">Forgot Password?</Link>
     </div>
   );
 }
