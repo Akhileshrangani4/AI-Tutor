@@ -78,7 +78,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                 setUseDefaultImage(false)
             }
         })
-    }, [])
+    }, [chatbot.id, form])
 
     useEffect(() => {
         if (inputFileRef.current?.files && inputFileRef.current.files.length > 0) {

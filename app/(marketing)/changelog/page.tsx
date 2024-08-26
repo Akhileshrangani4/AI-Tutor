@@ -1,5 +1,6 @@
 import { siteConfig } from '@/config/site'
 import { twMerge } from 'tailwind-merge'
+import Image from 'next/image'
 
 export default function ChangelogPage() {
     return (
@@ -315,10 +316,9 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                                     {item.description}
                                 </div>
                                 {item.image && (
-                                    <img
+                                    <Image
                                         src={item.image}
-                                        className="w-2/3 rounded shadow border mb-2"
-                                    />
+                                        className="w-2/3 rounded shadow border mb-2" alt={''}/>
                                 )}
                             </div>
                         ))}
@@ -338,10 +338,9 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                                     {item.description}
                                 </div>
                                 {item.image && (
-                                    <img
+                                    <Image
                                         src={item.image}
-                                        className="w-2/3 rounded shadow border mb-2"
-                                    />
+                                        className="w-2/3 rounded shadow border mb-2" alt={''}/>
                                 )}
                             </div>
                         ))}
@@ -361,10 +360,9 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                                     {item.description}
                                 </div>
                                 {item.image && (
-                                    <img
+                                    <Image
                                         src={item.image}
-                                        className="w-2/3 rounded shadow border mb-2"
-                                    />
+                                        className="w-2/3 rounded shadow border mb-2" alt={''}/>
                                 )}
                             </div>
                         ))}

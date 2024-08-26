@@ -1,12 +1,14 @@
 import { Metadata } from "next";
 import ResetPasswordForm from "@/components/reset-password-form";
+import { Suspense } from "react";
+import LoadingDots from "@/components/loading-dots";
 
 export const metadata: Metadata = {
     title: "Reset Password",
     description: "Enter your new password here",
 };
 
-export default async function ResetPassword() {
+function ResetPassword() {
 
     return (
         <div className="container flex h-screen w-screen flex-col items-center justify-center">
@@ -26,3 +28,11 @@ export default async function ResetPassword() {
         </div>
     );
 }
+
+export default function PageWrapper() {
+    return (
+      <Suspense fallback={<LoadingDots />}>
+        <ResetPassword />
+      </Suspense>
+    );
+  }

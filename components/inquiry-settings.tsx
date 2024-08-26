@@ -52,7 +52,7 @@ export function InquirySettings({ chatbot }: ChatbotOperationsProps) {
             form.setValue("inquiryAutomaticReplyText", data.inquiryAutomaticReplyText)
             form.setValue("inquiryDisplayLinkAfterXMessage", data.inquiryDisplayLinkAfterXMessage)
         })
-    }, [])
+    }, [chatbot.id, form])
 
     async function onSubmit(data: z.infer<typeof inquiryCustomizationSchema>) {
         setIsSaving(true)
