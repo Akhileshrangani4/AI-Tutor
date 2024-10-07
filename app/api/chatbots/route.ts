@@ -134,7 +134,7 @@ export async function POST(req: Request) {
     console.log(allFileforCodeInterpreter);
 
     bodyTools['code_interpreter'] = {
-      file_ids: allFileforCodeInterpreter.map((f) => f.openAIFileId)
+      file_ids: allFileforCodeInterpreter.map((f) => f.openAIFileId) as any
     };
 
     if (allFileforFileSearch.length > 0) {
@@ -149,9 +149,8 @@ export async function POST(req: Request) {
         name: `Vector Store - ${body.name}`,
         file_ids: allFileforFileSearch.map((f) => f.openAIFileId)
       });
-
       bodyTools['file_search'] = {
-        vector_store_ids: [batch.id]
+        vector_store_ids: [batch.id] as any
       };
     }
 

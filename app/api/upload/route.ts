@@ -1,5 +1,5 @@
 import { put } from '@vercel/blob';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next"
 
 import { authOptions } from "@/lib/auth"
@@ -12,7 +12,13 @@ import { fileTypes as searchTypes } from '@/lib/validations/fileSearch';
 
 export const maxDuration = 60;
 
-export async function POST(request: Request) {
+export const config = {
+    api: {
+      bodyParser: false,
+    },
+  };
+
+export async function POST(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
 
@@ -33,8 +39,13 @@ export async function POST(request: Request) {
             throw new RequiresHigherPlanError()
         }
 
-        const { searchParams } = new URL(request.url);
-        const filename = searchParams.get('filename');
+        const formData = await request.formData();
+        const uploadedfile = formData.get('file') as File;
+        if (!uploadedfile) {
+          return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+        }
+
+        const filename = uploadedfile.name;
 
         if (!filename) {
             return new Response('Missing filename', { status: 400 });
@@ -45,13 +56,16 @@ export async function POST(request: Request) {
             return new Response(`Invalid file extension, check the documentation for more information.`, { status: 400 });
         }
 
+        const bytes = await uploadedfile.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
         if (!request.body) {
             return new Response('Missing body', { status: 400 });
         }
 
-        const blob = await put(filename, request.body, {
+        const blob = await put(filename, buffer, {
             access: 'public',
-        });
+          });
 
         const openAIConfig = await db.openAIConfig.findUnique({
             select: {
@@ -70,27 +84,26 @@ export async function POST(request: Request) {
         const openai = new OpenAI({
             apiKey: openAIConfig?.globalAPIKey
         })
-
-        const file = await openai.files.create(
-            { file: await fetch(blob.url), purpose: 'assistants' }
-        )
+        const openaiFile = await openai.files.create({
+            file: new File([buffer], filename, { type: uploadedfile.type }),
+            purpose: 'assistants'
+          });
 
         await db.file.create({
             data: {
                 name: filename,
                 blobUrl: blob.url,
-                openAIFileId: file.id,
+                openAIFileId: openaiFile.id,
                 userId: session?.user?.id,
             }
         })
 
         return NextResponse.json({ url: blob.url }, { status: 201 });
     } catch (error) {
-        if (error instanceof RequiresHigherPlanError) {
-            return new Response("Requires Higher plan", { status: 402 })
-        }
-
         console.error(error);
-        return new Response(null, { status: 500 })
+        if (error instanceof RequiresHigherPlanError) {
+          return NextResponse.json({ error: "Requires Higher plan" }, { status: 402 });
+        }
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+      }
     }
-}

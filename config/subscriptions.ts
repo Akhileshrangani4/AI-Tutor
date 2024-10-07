@@ -7,7 +7,7 @@ export const freePlan: SubscriptionPlan = {
 
     maxChatbots: 27,
     maxCrawlers: 27,
-    maxFiles: 81,
+    maxFiles: 2187,
     unlimitedMessages: true,
     maxMessagesPerMonth: undefined,
     basicCustomization: true,
