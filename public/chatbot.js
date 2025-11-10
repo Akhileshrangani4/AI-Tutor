@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Create and append the button iframe
         var buttonIframe = document.createElement('iframe');
-        buttonIframe.src = "https://www.aialexa.org/embed/" + chatbotId + "/button?chatbox=false";
+        buttonIframe.src = "https://www.ai-alexa.vercel.app/embed/" + chatbotId + "/button?chatbox=false";
         buttonIframe.style = "z-index: 50; margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 60px; height: 60px; border: 0; border: 2px solid #e2e8f0; border-radius: 50%; color-scheme: none; background: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);";
         buttonIframe.id = "aialexa-chatbot-button-iframe";
         document.body.appendChild(buttonIframe);
 
         // Create and append the chat iframe
         var chatIframe = document.createElement('iframe');
-        chatIframe.src = "https://www.aialexa.org/embed/" + chatbotId + "/window?chatbox=false&withExitX=true";
+        chatIframe.src = "https://www.ai-alexa.vercel.app/embed/" + chatbotId + "/window?chatbox=false&withExitX=true";
         chatIframe.style = "z-index: 50; margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 75vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 55rem;";
         chatIframe.allowFullscreen = true;
         chatIframe.id = "aialexa-chatbot-iframe";
