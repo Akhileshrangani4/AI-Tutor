@@ -36,11 +36,11 @@ export const metadata: Metadata = {
     title,
     description,
   },
-  metadataBase: new URL('https://ai-alexa.vercel.app/'),
+  metadataBase: new URL('https://legacy.aialexa.org/'),
   openGraph: {
     title: title,
     description: description,
-    url: new URL('https://ai-alexa.vercel.app/'),
+    url: new URL('https://legacy.aialexa.org/'),
     siteName: 'aialexa',
     type: 'website',
   },
