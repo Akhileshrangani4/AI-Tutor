@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Create the iframe element
     var iframe = document.createElement('iframe');
-    iframe.src = `https://ai-alexa.vercel.app/embed/${chatbotId}/window?chatbox=false`;
+    iframe.src = `https://legacy.aialexa.org/embed/${chatbotId}/window?chatbox=false`;
     iframe.setAttribute("style", `
     overflow: hidden;
     height: 75vh;

@@ -94,7 +94,7 @@ export async function GET(req: Request) {
                             tw="flex text-xl"
                             style={{ fontFamily: "Inter", fontWeight: "normal" }}
                         >
-                            ai-alexa.vercel.app
+                            legacy.aialexa.org
                         </div>
                         <div
                             tw="flex items-center text-xl"

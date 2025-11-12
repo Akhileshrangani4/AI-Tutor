@@ -15,8 +15,8 @@ const rootElement = document.getElementById('chatbot-root');
 const root = createRoot(rootElement || document.createElement('div'));
 
 root.render(
-    <ShadowRootComponent styleUrl="https://www.ai-alexa.vercel.app/chatbot.css">
-        <noscript>This chatbot is built using aialexa https://www.ai-alexa.vercel.app/</noscript>
+    <ShadowRootComponent styleUrl="https://www.legacy.aialexa.org/chatbot.css">
+        <noscript>This chatbot is built using aialexa https://www.legacy.aialexa.org/</noscript>
         <ChatBox />
     </ShadowRootComponent>
 );

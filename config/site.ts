@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
     linkedin: "https://www.linkedin.com/in/akhileshrangani/",
     github: "https://github.com/Akhileshrangani4",
     twitter: "https://x.com/heyavi_",
-    url: "https://ai-alexa.vercel.app/"
+    url: "https://legacy.aialexa.org/"
   },
-  url: "https://ai-alexa.vercel.app/"
+  url: "https://legacy.aialexa.org/"
 }

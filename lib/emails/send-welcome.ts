@@ -8,7 +8,7 @@ export async function sendWelcomeEmail({ name, email }: { name: string | null | 
     try {
         // Send the email using the Resend API
         await EmailClient.emails.send({
-            from: "AI Tutor <no-reply@ai-alexa.vercel.app>",
+            from: "AI Tutor <no-reply@legacy.aialexa.org>",
             to: email as string,
             subject: `Welcome to ${siteConfig.name}!`,
             react: emailTemplate,
