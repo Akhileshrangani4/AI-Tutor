@@ -7,7 +7,7 @@ export async function sendNewInquiryEmail({ email, ownerName, userEmail, userInq
     try {
         // Send the email using the Resend API
         await EmailClient.emails.send({
-            from: "AI Tutor <no-reply@aialexa.org>",
+            from: "AI Tutor <no-reply@legacy.aialexa.org>",
             to: email as string,
             subject: `${siteConfig.name} - New User Inquiry!`,
             react: emailTemplate,

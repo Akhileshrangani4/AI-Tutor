@@ -16,7 +16,7 @@ export async function sendVerificationEmail({
 
   try {
     await EmailClient.emails.send({
-      from: "AI Tutor <no-reply@aialexa.org>",
+      from: "AI Tutor <no-reply@legacy.aialexa.org>",
       to: email as string,
       subject: `Verify Your Email Address for ${siteConfig.name}`,
       react: emailTemplate,
